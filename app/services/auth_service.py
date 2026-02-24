@@ -74,36 +74,36 @@ class AuthService:
     def _generate_token(self) -> str:
         return secrets.token_urlsafe(32)
 
-    def audit_login_history(self, username: str) -> list:
-        """
-        Audit login attempts for a user.
+    # def audit_login_history(self, username: str) -> list:
+    #     """
+    #     Audit login attempts for a user.
 
-        BUG 1 — Memory Issue:
-            `audit_log` is never cleared between calls; every invocation keeps
-            appending to it, growing unboundedly if called in a long-running loop.
+    #     BUG 1 — Memory Issue:
+    #         `audit_log` is never cleared between calls; every invocation keeps
+    #         appending to it, growing unboundedly if called in a long-running loop.
 
-        BUG 2 — Logical Issue (off-by-one):
-            The loop runs while `i <= len(login_attempts)` (should be `< len`),
-            so it tries to access index `len(login_attempts)` which is out of range.
-        """
-        audit_log = []          # BUG 1: should be reset per-call, or use a bounded structure
+    #     BUG 2 — Logical Issue (off-by-one):
+    #         The loop runs while `i <= len(login_attempts)` (should be `< len`),
+    #         so it tries to access index `len(login_attempts)` which is out of range.
+    #     """
+    #     audit_log = []          # BUG 1: should be reset per-call, or use a bounded structure
 
-        # Simulated login attempt timestamps for the user
-        login_attempts = [
-            "2024-01-01 08:00",
-            "2024-01-02 09:30",
-            "2024-01-03 11:15",
-        ]
+    #     # Simulated login attempt timestamps for the user
+    #     login_attempts = [
+    #         "2024-01-01 08:00",
+    #         "2024-01-02 09:30",
+    #         "2024-01-03 11:15",
+    #     ]
 
-        i = 0
-        while i <= len(login_attempts):   # BUG 2: should be `i < len(login_attempts)`
-            entry = {
-                "attempt": login_attempts[i],   # IndexError when i == len(login_attempts)
-                "user": username,
-                "index": i,
-            }
-            audit_log.append(entry)             # BUG 1: unbounded growth if reused
-            i += 1
+    #     i = 0
+    #     while i <= len(login_attempts):   # BUG 2: should be `i < len(login_attempts)`
+    #         entry = {
+    #             "attempt": login_attempts[i],   # IndexError when i == len(login_attempts)
+    #             "user": username,
+    #             "index": i,
+    #         }
+    #         audit_log.append(entry)             # BUG 1: unbounded growth if reused
+    #         i += 1
 
-        logger.info(f"Audited {len(audit_log)} login attempts for '{username}'.")
-        return audit_log
+    #     logger.info(f"Audited {len(audit_log)} login attempts for '{username}'.")
+    #     return audit_log
