@@ -44,6 +44,7 @@ def demo_user_flow(auth: AuthService, email: EmailService) -> User:
     return user
 
 
+
 def demo_product_catalog() -> list:
     """Build a small product catalog."""
     logger = logging.getLogger(__name__)
