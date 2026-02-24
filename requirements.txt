@@ -1,0 +1,5 @@
+# Runtime dependencies
+pytest>=7.0
+
+# Optional: enhanced testing
+pytest-cov>=4.0
