@@ -22,7 +22,7 @@ def setup_logging(config: Config) -> None:
     )
 
 
-def demo_user_fow(auth: AuthService, email: EmailService) -> User:
+def demo_user_flow(auth: AuthService, email: EmailService) -> User:
     """Register a user, log them in, and send a welcome email."""
     logger = logging.getLogger(__name__)
 
